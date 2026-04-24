@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vật Lý & Đời Sống</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX for Physics Formulas -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div id="particle-bg"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo" data-target="home">
+                <i data-lucide="zap" class="text-neon-yellow"></i>
+                <span>VậtLý<span class="text-neon-blue">&</span>ĐờiSống</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" data-target="home" class="active">Trang Chủ</a></li>
+                <li><a href="#" data-target="phenomena">Hiện Tượng Đời Sống</a></li>
+                <li><a href="#" data-target="theory">Khám Phá Lý Thuyết</a></li>
+                <li><a href="#" data-target="vlab">Phòng Thí Nghiệm</a></li>
+                <li><a href="#" data-target="games" class="btn-play">
+                    <i data-lucide="gamepad-2"></i> Trò Chơi
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main id="app-content">
+        <!-- Dynamic content wrapper -->
+    </main>
+
+    <!-- Global Video Modal -->
+    <div id="video-modal" class="modal-overlay">
+        <div class="modal-content card-glass">
+            <button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button>
+            <h3 id="modal-title">Phân Tích Hiện Tượng</h3>
+            <div class="video-wrapper mt-2">
+                <video id="analysis-video" controls>
+                    Trình duyệt của bạn không hỗ trợ video.
+                </video>
+            </div>
+            <p id="modal-desc" class="mt-2 text-secondary"></p>
+        </div>
+    </div>
+
+    <!-- Instructions Modal -->
+    <div id="instruction-modal" class="modal-overlay">
+        <div class="modal-content card-glass instruction-modal-content">
+            <button class="modal-close" onclick="closeInstructions()"><i data-lucide="x"></i></button>
+            <h2 class="text-neon-blue">Cẩm Nang Kỹ Sư Tập Sự</h2>
+            <div class="instruction-body mt-4">
+                <section class="instr-section">
+                    <h3 class="text-neon-yellow"><i data-lucide="book-open"></i> Cốt Truyện</h3>
+                    <p>Bạn vào vai kỹ sư tập sự tại trạm nghiên cứu năng lượng. Một sự cố bí ẩn đã làm sập nguồn toàn bộ hệ thống. Nhiệm vụ của bạn là vượt qua các khu vực nguy hiểm và sửa chữa các thiết bị để khôi phục lại trạm.</p>
+                </section>
+                <div class="instr-grid mt-4">
+                    <div class="instr-item">
+                        <i data-lucide="mouse-pointer-2" class="text-neon-blue"></i>
+                        <h4>Kéo & Thả</h4>
+                        <p>Kéo các linh kiện (tụ điện, điện trở...) từ kho vào các vị trí trống trên bảng mạch.</p>
+                    </div>
+                    <div class="instr-item">
+                        <i data-lucide="calculator" class="text-neon-blue"></i>
+                        <h4>Tính Toán</h4>
+                        <p>Sử dụng công thức vật lý để tính đúng thông số yêu cầu (ví dụ: khoảng cách an toàn r, điện dung C).</p>
+                    </div>
+                    <div class="instr-item">
+                        <i data-lucide="award" class="text-neon-blue"></i>
+                        <h4>Phần Thưởng</h4>
+                        <p>Hoàn thành mỗi màn để nhận Huy hiệu danh dự và tăng điểm kinh nghiệm (XP).</p>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary mt-4 w-100" onclick="closeInstructions()">Tôi đã sẵn sàng!</button>
+        </div>
+    </div>
+
+    <!-- Templates -->
+    <template id="view-home">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="badge">Nền tảng học tập Gamification</div>
+                <h1>Học Vật Lý Qua <br><span class="text-gradient">Thực Tế & Mô Phỏng</span></h1>
+                <p>Từ hiện tượng đời sống hàng ngày đến các thiết bị kỹ thuật cao, cùng khám phá và trở thành kỹ sư năng lượng tài ba qua các thử thách tương tác.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="router.navigate('games')">
+                        <i data-lucide="rocket"></i> Bắt đầu thử thách ngay
+                    </button>
+                    <button class="btn btn-secondary" onclick="router.navigate('phenomena')">Khám phá hiện tượng</button>
+                </div>
+            </div>
+            <div class="hero-graphic">
+                <div class="floating-circle circle-1"></div>
+                <div class="floating-circle circle-2"></div>
+                <div class="card-glass intro-card">
+                    <i data-lucide="zap" class="text-neon-yellow large-icon"></i>
+                    <h3>Năng lượng luôn chuyển hóa</h3>
+                    <p>Khám phá định luật bảo toàn qua trải nghiệm mô phỏng thời gian thực!</p>
+                </div>
+            </div>
+        </section>
+        <section class="features">
+            <div class="feature-card" onclick="router.navigate('phenomena')">
+                <div class="icon-wrap phenomena-icon"><i data-lucide="eye"></i></div>
+                <h3>Hiện Tượng Đời Sống</h3>
+                <p>Khắc sâu kiến thức bằng những ví dụ trực quan như tia sét mini, tĩnh điện mùa đông.</p>
+            </div>
+            <div class="feature-card" onclick="router.navigate('theory')">
+                <div class="icon-wrap theory-icon"><i data-lucide="book-open"></i></div>
+                <h3>Khám Phá Lý Thuyết</h3>
+                <p>Tóm tắt công thức, định luật qua các viên gạch kiến thức (Knowledge Nuggets).</p>
+            </div>
+            <div class="feature-card" onclick="router.navigate('vlab')">
+                <div class="icon-wrap game-icon"><i data-lucide="cpu"></i></div>
+                <h3>Phòng Thí Nghiệm</h3>
+                <p>Mô phỏng các định luật vật lý (Ohm, Tụ điện) với các thông số thực tế.</p>
+            </div>
+        </section>
+    </template>
+
+    <template id="view-phenomena">
+        <div class="page-container fade-in">
+            <div class="page-header">
+                <h2>Hiện Tượng <span class="text-gradient">Đời Sống</span></h2>
+                <p>Vật lý không ở đâu xa, Vật lý quanh ta!</p>
+            </div>
+            <div class="grid-container" id="phenomena-grid">
+               <!-- Injected by JS -->
+            </div>
+        </div>
+    </template>
+
+    <template id="view-theory">
+        <div class="page-container fade-in">
+            <div class="page-header">
+                <h2>Khám Phá <span class="text-gradient">Lý Thuyết</span></h2>
+                <p>Công thức, định luật và kiến thức cốt lõi được tóm gọn dễ hiểu nhất.</p>
+            </div>
+            <div class="theory-layout" id="theory-container">
+                <!-- Injected by JS -->
+            </div>
+        </div>
+    </template>
+
+    <template id="view-vlab">
+        <div class="page-container fade-in">
+            <div class="page-header">
+                <h2>Phòng Thí Nghiệm <span class="text-gradient">Vật Lý Ảo</span></h2>
+                <p>Khám phá bản chất vật lý qua các mô hình tương tác thời gian thực</p>
+            </div>
+            <div class="vlab-layout mt-4">
+                <div class="vlab-sidebar card-glass">
+                    <h3 class="text-neon-blue mb-4">Các Bài Thí Nghiệm</h3>
+                    <ul class="vlab-menu">
+                        <li class="active" data-lab="2"><i data-lucide="activity"></i> Định Luật Ohm</li>
+                        <li data-lab="4"><i data-lucide="thermometer"></i> Định Luật Joule</li>
+                    </ul>
+                </div>
+
+
+                <!-- LAB 2 -->
+                <div id="vlab-sim-2" class="vlab-lab-page ohm-full-layout active" style="display:grid;">
+                    <div class="ohm-left-panel">
+                        <div class="ohm-ctrl-box">
+                            <div class="ohm-ctrl-title"><i data-lucide="settings"></i> Điều khiển (SGK Vật lý 11)</div>
+                            <div class="ohm-ctrl-section">
+                                <label>Suất điện động $\xi$ (V): <span id="ohm-E-val" class="ohm-val-badge">6.0</span></label>
+                                <input type="range" id="ohm-E-slider" min="1" max="24" step="0.5" value="6.0" class="ohm-slider">
+                            </div>
+                            <div class="ohm-ctrl-section mt-2">
+                                <label>Điện trở trong $r$ ($\Omega$): <span id="ohm-r-val" class="ohm-val-badge">1.0</span></label>
+                                <input type="range" id="ohm-r-slider" min="0" max="5" step="0.1" value="1.0" class="ohm-slider">
+                            </div>
+                            <div class="ohm-ctrl-section mt-2">
+                                <label>Biến trở R ($\Omega$): <span id="ohm-R-display" class="ohm-val-badge">10.0</span></label>
+                                <input type="range" id="ohm-R-slider" min="1" max="100" step="0.5" value="10.0" class="ohm-slider">
+                            </div>
+                            <button id="ohm-switch-btn" class="ohm-switch-off mt-3"><i data-lucide="power"></i> K (OFF)</button>
+                        </div>
+                        <div class="ohm-display-box mt-2">
+                            <div class="ohm-meters-row">
+                                <div class="ohm-meter"><span>I (A)</span><div class="ohm-meter-val cyan" id="ohm-ammeter">0.000</div></div>
+                                <div class="ohm-meter"><span>U (V)</span><div class="ohm-meter-val yellow" id="ohm-voltmeter">0.000</div></div>
+                            </div>
+                        </div>
+                        <div class="ohm-action-box card-glass mt-2">
+                            <button id="ohm-log-btn" class="ohm-log-btn"><i data-lucide="save"></i> Ghi dữ liệu</button>
+                        </div>
+                    </div>
+                    <div class="ohm-right-panel">
+                        <div class="ohm-circuit-box">
+                            <svg id="ohm-circuit-svg" viewBox="0 0 480 300" class="ohm-svg">
+                                <!-- Wires -->
+                                <line x1="80" y1="60" x2="400" y2="60" stroke="#1e3a5f" stroke-width="3" stroke-linecap="round" id="ohm-wire-top"/>
+                                <line x1="400" y1="60" x2="400" y2="240" stroke="#1e3a5f" stroke-width="3" stroke-linecap="round" id="ohm-wire-right"/>
+                                <line x1="80" y1="240" x2="400" y2="240" stroke="#1e3a5f" stroke-width="3" stroke-linecap="round" id="ohm-wire-bottom"/>
+                                <line x1="80" y1="60" x2="80" y2="130" stroke="#1e3a5f" stroke-width="3" stroke-linecap="round" id="ohm-wire-left-top"/>
+                                <line x1="80" y1="170" x2="80" y2="240" stroke="#1e3a5f" stroke-width="3" stroke-linecap="round" id="ohm-wire-left-bot"/>
+                                
+                                <!-- Source (E, r) -->
+                                <rect x="140" y="70" width="120" height="50" rx="6" fill="#1e293b" stroke="#00f0ff" stroke-width="1.5"/>
+                                <text x="200" y="100" text-anchor="middle" fill="#00f0ff" font-size="13">NGUỒN ($\xi, r$)</text>
+                                <text x="200" y="113" text-anchor="middle" fill="#94a3b8" font-size="10" id="ohm-pin-label">$\xi$=6.0V, r=1.0Ω</text>
+                                
+                                <!-- Voltmeter & parallel connections -->
+                                <line x1="320" y1="30" x2="320" y2="60" stroke="#facc15" stroke-width="3" />
+                                <line x1="360" y1="30" x2="360" y2="60" stroke="#facc15" stroke-width="3" />
+                                <circle cx="340" cy="30" r="20" fill="#1e293b" stroke="#facc15" stroke-width="4"/>
+                                <text x="340" y="35" text-anchor="middle" fill="#facc15" font-size="14">V</text>
+                                
+                                <!-- Switch -->
+                                <circle cx="80" cy="170" r="4" fill="#ef4444" id="ohm-switch-dot"/>
+                                <line x1="80" y1="170" x2="80" y2="130" stroke="#ef4444" stroke-width="3" stroke-linecap="round" id="ohm-switch-blade" style="transition: 0.3s; transform-origin: 80px 170px; transform: rotate(-30deg);"/>
+                                
+                                <!-- Light Bulb -->
+                                <g id="ohm-bulb-group">
+                                    <circle cx="400" cy="110" r="15" fill="#1e293b" stroke="#94a3b8" stroke-width="1.5" id="ohm-bulb-glass"/>
+                                    <path d="M392,110 Q400,95 408,110" fill="none" stroke="#94a3b8" stroke-width="1" id="ohm-bulb-filament"/>
+                                    <rect x="390" y="125" width="20" height="10" fill="#475569" rx="2"/>
+                                    <circle cx="400" cy="110" r="15" fill="#facc15" opacity="0" id="ohm-bulb-glow" style="filter: blur(8px);"/>
+                                </g>
+
+                                <!-- Ammeter -->
+                                <circle cx="400" cy="200" r="20" fill="#1e293b" stroke="#00f0ff" stroke-width="2"/>
+                                <text x="400" y="205" text-anchor="middle" fill="#00f0ff" font-size="14">A</text>
+                                
+                                <!-- Resistor R -->
+                                <rect x="160" y="215" width="120" height="30" rx="5" fill="#1e293b" stroke="#00f0ff" stroke-width="1.5"/>
+                                <text x="220" y="260" text-anchor="middle" fill="#94a3b8" font-size="10">Biến trở R</text>
+                                
+                                <defs>
+                                    <filter id="glow-filter"><feGaussianBlur stdDeviation="5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                                </defs>
+                                
+                                <circle r="4" fill="#00f0ff" opacity="0" id="ohm-particle-1"><animateMotion dur="2s" repeatCount="indefinite" begin="indefinite"><mpath href="#ohm-current-path"/></animateMotion></circle>
+                                <circle r="4" fill="#00f0ff" opacity="0" id="ohm-particle-2"><animateMotion dur="2s" repeatCount="indefinite" begin="0.16s" calcMode="linear"><mpath href="#ohm-current-path"/></animateMotion></circle>
+                                <circle r="4" fill="#00f0ff" opacity="0" id="ohm-particle-3"><animateMotion dur="2s" repeatCount="indefinite" begin="0.32s" calcMode="linear"><mpath href="#ohm-current-path"/></animateMotion></circle>
+                                <circle r="4" fill="#00f0ff" opacity="0" id="ohm-particle-4"><animateMotion dur="2s" repeatCount="indefinite" begin="0.48s" calcMode="linear"><mpath href="#ohm-current-path"/></animateMotion></circle>
+                                <circle r="4" fill="#00f0ff" opacity="0" id="ohm-particle-5"><animateMotion dur="2s" repeatCount="indefinite" begin="0.64s" calcMode="linear"><mpath href="#ohm-current-path"/></animateMotion></circle>
+                                <circle r="4" fill="#00f0ff" opacity="0" id="ohm-particle-6"><animateMotion dur="2s" repeatCount="indefinite" begin="0.8s" calcMode="linear"><mpath href="#ohm-current-path"/></animateMotion></circle>
+                                <circle r="4" fill="#00f0ff" opacity="0" id="ohm-particle-7"><animateMotion dur="2s" repeatCount="indefinite" begin="0.96s" calcMode="linear"><mpath href="#ohm-current-path"/></animateMotion></circle>
+                                <circle r="4" fill="#00f0ff" opacity="0" id="ohm-particle-8"><animateMotion dur="2s" repeatCount="indefinite" begin="1.12s" calcMode="linear"><mpath href="#ohm-current-path"/></animateMotion></circle>
+                                <circle r="4" fill="#00f0ff" opacity="0" id="ohm-particle-9"><animateMotion dur="2s" repeatCount="indefinite" begin="1.28s" calcMode="linear"><mpath href="#ohm-current-path"/></animateMotion></circle>
+                                <circle r="4" fill="#00f0ff" opacity="0" id="ohm-particle-10"><animateMotion dur="2s" repeatCount="indefinite" begin="1.44s" calcMode="linear"><mpath href="#ohm-current-path"/></animateMotion></circle>
+                                <circle r="4" fill="#00f0ff" opacity="0" id="ohm-particle-11"><animateMotion dur="2s" repeatCount="indefinite" begin="1.6s" calcMode="linear"><mpath href="#ohm-current-path"/></animateMotion></circle>
+                                <circle r="4" fill="#00f0ff" opacity="0" id="ohm-particle-12"><animateMotion dur="2s" repeatCount="indefinite" begin="1.76s" calcMode="linear"><mpath href="#ohm-current-path"/></animateMotion></circle>
+                                <path id="ohm-current-path" d="M80,240 L80,60 L400,60 L400,240 L80,240" fill="none" stroke="none"/>
+                            </svg>
+                        </div>
+                        <div class="ohm-bottom-row mt-2">
+                            <div class="ohm-graph-box"><canvas id="ohm-graph-canvas" width="240" height="120"></canvas><button id="ohm-clear-graph" class="ohm-clear-btn">Xóa</button></div>
+                            <div class="ohm-table-box"><table id="ohm-data-table"><thead><tr><th>Lần</th><th>R</th><th>I</th><th>U</th></tr></thead><tbody id="ohm-table-body"></tbody></table></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- LAB 4: JOULE'S LAW -->
+                <!-- LAB 4: JOULE'S LAW -->
+                <div id="vlab-sim-4" class="vlab-lab-page joule-v-stack" style="display:none;">
+                    <!-- TOP PART: Simulation + Analysis Sidebar -->
+                    <div class="joule-main-row-alt">
+                        <div class="joule-center-panel">
+                            <div class="sim-container card-glass">
+                                <svg viewBox="0 0 500 400" class="joule-svg">
+                                    <!-- Background bench -->
+                                    <rect x="50" y="320" width="400" height="10" fill="#1e293b" />
+                                    
+                                    <!-- Calorimeter (Cutaway) -->
+                                    <g id="calorimeter">
+                                        <rect x="180" y="150" width="140" height="170" fill="#475569" stroke="#94a3b8" stroke-width="2" />
+                                        <rect x="190" y="160" width="120" height="150" fill="#1e293b" />
+                                        <rect x="200" y="170" width="100" height="130" fill="#0c4a6e" id="water-fill" />
+                                        <path d="M220,290 L220,280 Q220,270 230,270 L270,270 Q280,270 280,260 L280,250 Q280,240 270,240 L230,240 Q220,240 220,230 L220,220" fill="none" stroke="#94a3b8" stroke-width="3" id="heating-coil" />
+                                        <g id="stirrer">
+                                            <line x1="250" y1="120" x2="250" y2="290" stroke="#cbd5e1" stroke-width="2" />
+                                            <rect x="235" y="285" width="30" height="5" fill="#cbd5e1" />
+                                        </g>
+                                        <rect x="285" y="140" width="8" height="150" fill="#f8fafc" rx="4" />
+                                        <rect x="285" y="230" width="8" height="60" fill="#ef4444" id="therm-mercury" />
+                                        <text x="300" y="130" fill="#ef4444" font-weight="bold" font-size="12" id="temp-display">25.0°C</text>
+                                    </g>
+
+                                    <!-- Power Supply -->
+                                    <g id="power-supply">
+                                        <rect x="50" y="200" width="100" height="100" rx="8" fill="#111827" stroke="#00f0ff" />
+                                        <circle cx="100" cy="240" r="15" fill="#1e293b" stroke="#00f0ff" />
+                                        <rect x="65" y="210" width="70" height="20" fill="#000" rx="2" />
+                                        <text x="100" y="224" text-anchor="middle" fill="#00f0ff" font-family="monospace" font-size="12" id="psu-voltage">12.0V</text>
+                                    </g>
+
+                                    <path d="M150,250 Q200,250 220,220" fill="none" stroke="#ef4444" stroke-width="2" />
+                                    <path d="M150,270 Q180,350 280,220" fill="none" stroke="#111827" stroke-width="2" />
+                                    <g id="bubbles-group"></g>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="joule-side-panel">
+                            <div class="joule-analysis card-glass">
+                                <h5 class="text-neon-green mb-2">KẾT QUẢ PHÂN TÍCH</h5>
+                                <div class="live-math">
+                                    $Q_{thu} = m \cdot c \cdot \Delta T$ <br>
+                                    $= $ <span id="joule-q-thu" class="text-neon-yellow">0.0</span> J
+                                    <hr style="border-color: rgba(255,255,255,0.1); margin: 8px 0;">
+                                    $A_{điện} = U \cdot I \cdot t$ <br>
+                                    $= $ <span id="joule-a-dien" class="text-neon-blue">0.0</span> J
+                                </div>
+                                
+                                <div class="joule-table-container mt-3">
+                                    <table id="joule-data-table">
+                                        <thead>
+                                            <tr><th>Lần</th><th>I (A)</th><th>U (V)</th><th>t (s)</th><th>ΔT</th><th>$Q_{thu}$ (J)</th><th>$A_{điện}$ (J)</th></tr>
+                                        </thead>
+                                        <tbody id="joule-table-body"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BOTTOM PART: Controls + Goal/Log Panel -->
+                    <div class="joule-controls-row card-glass mt-3">
+                        <div class="joule-h-controls">
+                            <div class="joule-widget">
+                                <label>Hiệu điện thế (U)</label>
+                                <div class="led-display" id="joule-u-led">12.0 V</div>
+                                <input type="range" id="joule-u-slider" min="0" max="30" step="0.5" value="12" class="ohm-slider">
+                            </div>
+                            <div class="joule-widget">
+                                <label>Điện trở (R)</label>
+                                <div class="led-display" id="joule-r-led">10.0 $\Omega$</div>
+                                <input type="range" id="joule-r-slider" min="1" max="50" step="0.5" value="10" class="ohm-slider">
+                            </div>
+                            <div class="joule-widget">
+                                <label>Nhiệt độ ban đầu ($T_1$)</label>
+                                <div class="led-display" id="joule-t1-led">25.0 °C</div>
+                                <input type="range" id="joule-t1-slider" min="10" max="40" step="0.5" value="25" class="ohm-slider">
+                            </div>
+                            <div class="joule-timer-box">
+                                <div class="digital-timer" id="joule-timer-display">00:00.0</div>
+                                <div class="timer-btns">
+                                    <button id="joule-timer-start" class="btn-timer start">START</button>
+                                    <button id="joule-timer-reset" class="btn-timer reset">RESET</button>
+                                </div>
+                            </div>
+                            <!-- New Compact Panel -->
+                            <div class="joule-compact-info">
+                                <button id="joule-log-btn" class="btn btn-primary btn-sm w-100">
+                                    <i data-lucide="save"></i> Ghi dữ liệu
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </template>
+
+    <template id="view-games">
+        <div class="page-container fade-in">
+            <div class="page-header relative">
+                <h2>CHINH PHỤC <span class="text-gradient">MẠCH ĐIỆN</span></h2>
+                <p>Khám phá Chương 4: Dòng điện - Mạch điện (Vật lý 11 - Kết nối tri thức)</p>
+            </div>
+            
+            <div class="game-hub">
+                <div class="player-profile card-glass">
+                    <div class="avatar-container">
+                        <img id="player-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Engineer" alt="Avatar" class="avatar">
+                        <button class="btn-icon-small" onclick="randomizeAvatar()"><i data-lucide="refresh-cw"></i></button>
+                    </div>
+                    <div class="profile-info">
+                        <div class="name-row">
+                            <h3 id="player-name-display" onclick="changeName()">Kỹ Sư Tập Sự</h3>
+                        </div>
+                        <div class="rank-info text-neon-blue">Danh hiệu: <span id="player-rank">Kỹ sư tập sự</span></div>
+                        <div class="xp-bar-container mt-2">
+                            <div class="xp-label">Tiến trình: <span id="game-progress-percent">0</span>%</div>
+                            <div class="xp-progress-bg"><div class="xp-progress-fill" id="game-progress-bar" style="width: 0%"></div></div>
+                        </div>
+                        <button class="btn btn-secondary mt-3 w-100" onclick="resetGameProgress()"><i data-lucide="trash-2"></i> Cài lại trò chơi</button>
+                    </div>
+                </div>
+
+                <div class="game-map card-glass">
+                    <h3 class="mb-4 text-center">BẢN ĐỒ LỘ TRÌNH</h3>
+                    <div class="map-grid" id="game-map-container">
+                        <!-- Levels 1-10 + Special -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="view-play-circuit">
+        <div class="quiz-container fade-in">
+            <div class="quiz-header card-glass">
+                <div class="quiz-meta">
+                    <span class="level-tag" id="current-quiz-level">CẤP 1</span>
+                    <span class="step-tag" id="current-quiz-step">Câu 1/3</span>
+                </div>
+                <div class="quiz-lives" id="quiz-lives-container">
+                    <!-- Hearts icons injected here -->
+                </div>
+                <button class="btn-exit" onclick="router.navigate('games')"><i data-lucide="x"></i> Thoát</button>
+            </div>
+
+            <div class="quiz-body mt-4">
+                <div class="question-card card-glass">
+                    <div id="quiz-question-text" class="question-text">Câu hỏi đang tải...</div>
+                    <div id="quiz-options" class="options-grid mt-4">
+                        <!-- Options injected here -->
+                    </div>
+                    <div id="quiz-short-answer" class="short-answer-box mt-4" style="display:none;">
+                        <input type="number" id="quiz-input-number" class="neon-input" placeholder="Nhập giá trị số...">
+                        <button class="btn btn-primary mt-2 w-100" id="btn-submit-short">Xác nhận</button>
+                    </div>
+                </div>
+
+                <div id="quiz-feedback" class="feedback-card card-glass mt-3" style="display:none;">
+                    <div class="feedback-content">
+                        <div id="feedback-icon"></div>
+                        <div class="feedback-text-wrap">
+                            <h4 id="feedback-title">Chính xác!</h4>
+                            <p id="feedback-desc">Giải thích ở đây.</p>
+                        </div>
+                    </div>
+                    <button id="btn-next-quiz" class="btn btn-primary mt-3">Tiếp theo</button>
+                    <button id="btn-retry-quiz" class="btn btn-secondary mt-3" style="display:none;">Thử lại</button>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script src="js/data.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/vlab.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
